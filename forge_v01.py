@@ -114,7 +114,7 @@ def analyser(chemin_video):
             continue  # on saute cette image (voir UNE_IMAGE_SUR)
 
         # LA ligne magique : YOLO détecte tout ce qu'il voit
-        resultats = modele.track(image, verbose=False, persist=True, conf=0.4)[0]
+        resultats = modele.track(image, verbose=False, persist=True, conf=0.3)[0]
 
         personnes_visibles = 0
         qqn_en_zone = False
@@ -162,6 +162,10 @@ def analyser(chemin_video):
                       (int(ZONE[0]*w), int(ZONE[1]*h)),
                       (int(ZONE[2]*w), int(ZONE[3]*h)),
                       (255, 0, 0), 2)
+        cv2.rectangle(image_annotee,
+                      (int(ZONE2[0]*w), int(ZONE2[1]*h)),
+                      (int(ZONE2[2]*w), int(ZONE2[3]*h)),
+                      (0, 255, 0), 2)
         cv2.imshow("FORGE - vision en direct", image_annotee)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break

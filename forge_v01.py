@@ -42,7 +42,7 @@ ZONE2 = (0.0, 0.4, 0.35, 1.0)   # zone 2 : côté gauche (etabli/ponts)
 # On n'analyse qu'une image sur N (la vidéo fait ~25-30 img/sec,
 # analyser chaque image serait lent et inutile).
 # EXERCICE 2 : essaie 5, 15, 30 et observe la différence de vitesse.
-UNE_IMAGE_SUR = 10
+UNE_IMAGE_SUR = 2
 
 # Les objets qui nous intéressent (noms YOLO en anglais).
 # EXERCICE 3 : ajoute "car" si tu analyses un garage,

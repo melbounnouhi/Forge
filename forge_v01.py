@@ -78,7 +78,7 @@ def analyser(chemin_video):
 
     # 1. Charger le modèle. "yolov8n" = version nano : rapide,
     #    parfaite pour débuter. (Se télécharge tout seul au 1er lancement.)
-    modele = YOLO("yolov8n.pt")
+    modele = YOLO("yolov8s.pt")
 
     # 2. Ouvrir la vidéo
     video = cv2.VideoCapture(chemin_video)

@@ -34,6 +34,20 @@ Zones are defined as relative coordinates (x1, y1, x2, y2) at the top of the scr
 - [ ] Structured JSON export → LeRobot-compatible formats
 - [ ] Enrichment pipeline: pose estimation, depth
 
+## Benchmark (MOT16-02, 54 pedestrians, CC BY-NC-SA — research use only)
+
+| Config | Unique IDs | Max simultaneous | Score |
+|---|---|---|---|
+| yolov8n, imgsz 640, every 10th frame | ~9 | 4 | ~17% |
+| + imgsz 1280 | 18 | 7 | 33% |
+| + every 2nd frame | 33 | 11 | 61% |
+| + yolov8s | 42 | 11 | 78% |
+
+12 of the 42 IDs live under 1 second (likely fragments) → ~30 solid tracks (56%).
+Next: tracker memory (`track_buffer`) and proper MOT evaluation with `motmetrics`.
+
+`frames_to_video.py` converts a MOT image sequence into a video for testing.
+
 ## Why
 
 I'm a 16-year-old student in France, learning computer vision by building tools for the messy real world. This is project #1.

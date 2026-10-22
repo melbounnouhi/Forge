@@ -98,7 +98,8 @@ def analyser(chemin_video):
     allers_retours = 0
     derniere_zone = None
     zone_par_id = {}
-    trajets_par_id = defaultdict(int)                    # record de monde simultané
+    trajets_par_id = defaultdict(int)
+    ids_vus = set()                    # record de monde simultané
     dans_zone_avant = False
     entrees_en_zone = 0                     # nb de fois où qqn ENTRE en zone
     num_image = 0
@@ -114,7 +115,7 @@ def analyser(chemin_video):
             continue  # on saute cette image (voir UNE_IMAGE_SUR)
 
         # LA ligne magique : YOLO détecte tout ce qu'il voit
-        resultats = modele.track(image, verbose=False, persist=True, conf=0.3)[0]
+        resultats = modele.track(image, verbose=False, persist=True, conf=0.3, imgsz=1280)[0]
 
         personnes_visibles = 0
         qqn_en_zone = False
@@ -138,6 +139,7 @@ def analyser(chemin_video):
                     else:
                         zone_actuelle = None
                 pid = int(boite.id) if boite.id is not None else -1
+                if pid != -1: ids_vus.add(pid)
                 if zone_actuelle is not None and pid != -1:
                     if pid in zone_par_id and zone_par_id[pid] != zone_actuelle:
                         trajets_par_id[pid] += 1
@@ -193,6 +195,8 @@ Taux d'occupation: {100 * temps_en_zone / max(duree_video, 1):.0f} %
 Entrées en zone  : {entrees_en_zone} fois
 Allers-retours G<->D : {allers_retours} fois
 Personnes suivies : {len(zone_par_id)}
+IDs uniques vus  : {len(ids_vus)}
+
 
 --- PRÉSENCES DÉTECTÉES ---"""
     for nom, secs in sorted(presences.items()):
